@@ -3,14 +3,13 @@ const mongoose = require("mongoose");
 const DigitsSchema = new mongoose.Schema(
     {
         pixels: {
-            type: [Number],
-            required: true
+            type: [Number],         //Liste de 0 et de 1
         },
         label: {
-            type: Number
+            type: Number            //Nombre trouvé par le modèle
         }
     },
-    { collection: "collect" }
+    { collection: "digits" }
 );
 
 const Digit = mongoose.model("Digit", DigitsSchema);
