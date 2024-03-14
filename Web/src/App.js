@@ -1,8 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react';
 import axios from 'axios';
+import './App.css';
 
 const App = () => {
-  const canvasRef = useRef(null); // Référence au canva
+  const canvasRef = useRef(null); // Référence au canvas
   const [isDrawing, setIsDrawing] = useState(false); // État pour indiquer si l'utilisateur est en train de dessiner
   const [digit, setDigit] = useState(null); // Chiffre dessiné par l'utilisateur
   const [prediction, setPrediction] = useState(null); // Prédiction du chiffre
@@ -75,31 +76,36 @@ const App = () => {
   const handleClear = () => {
     const canvas = canvasRef.current;
     const context = canvas.getContext('2d');
-    context.clearRect(0, 0, canvas.width, canvas.height);
+    canvas.width = canvas.width; // Redéfinir la largeur du canvas pour effacer le contenu
     setDigit(null);
     setPrediction(null);
     setIsCleared(true); // Mettre à jour l'état de l'effacement
   };
 
   return (
-    <div>
-      <h1>Application Web de Reconnaissance de Chiffres</h1>
+    <div className="app-container"> {/* Ajoutez une classe pour le conteneur principal */}
+      <h1>Digit Recognition</h1>
       <div>
         {/* Canvas pour dessiner*/}
         <canvas
           ref={canvasRef}
+          className="drawing-canvas"
           width="280"
           height="280"
           style={{ border: '1px solid black' }}
         />
       </div>
       {/* Boutons pour prédire le chiffre et effacer le contenu */}
-      <div>
-        <button onClick={handlePredict}>Prédire le Chiffre</button>
-        <button onClick={handleClear}>Effacer</button>
+      <div className="button-container"> {/* Ajoutez une classe pour le conteneur des boutons */}
+        <button className="predict-button" onClick={handlePredict}>Prédire un Chiffre</button> {/* Ajoutez une classe pour le bouton */}
+        <button className="clear-button" onClick={handleClear}>Effacer</button> {/* Ajoutez une classe pour le bouton */}
       </div>
       {/* Afficher la prédiction */}
       {prediction && <h2>Prédiction : {prediction}</h2>}
+      {/* Footer */}
+      <footer className="footer">
+        <p>Ce projet a été réalisé par Julia LOGANATHAN - Samuel BELLAICHE - Sonita MORENCY</p>
+      </footer>
     </div>
   );
 };
