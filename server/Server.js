@@ -4,7 +4,7 @@ const connect = require("./database/connexion");
 const cors = require("cors");
 const sharp = require("sharp"); // Utilisation de Sharp pour le traitement d'images
 const fs = require("fs"); // Module pour la gestion des fichiers
-const { Digit } = require("./models/Digit"); // Assurez-vous d'importer votre modèle de données
+const { Digit } = require("./models/Digits"); // Assurez-vous d'importer votre modèle de données
 
 // Middlewares
 app.use(express.json());
