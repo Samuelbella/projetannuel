@@ -2,7 +2,7 @@ const express = require("express");
 const app = express();
 const connect = require("./database/connexion");
 const cors = require("cors");
-const cv2 = require("opencv4nodejs");
+const sharp = require("sharp"); // Utilisation de Sharp pour le traitement d'images
 const fs = require("fs"); // Module pour la gestion des fichiers
 const { Digit } = require("./models/Digit"); // Assurez-vous d'importer votre modèle de données
 
@@ -23,7 +23,11 @@ app.post("/apiImage/process-and-predict", async (req, res) => {
     const imageName = `${Date.now()}.png`;
     const imagePath = `./uploads/${imageName}`;
     try {
-        fs.writeFileSync(imagePath, imageBuffer);
+        // Utiliser Sharp pour transformer l'image en PNG et la redimensionner
+        await sharp(imageBuffer)
+            .resize(28, 28)
+            .toFile(imagePath);
+
         console.log("Image enregistrée avec succès :", imageName);
     } catch (error) {
         console.error("Erreur lors de l'enregistrement de l'image :", error);
@@ -57,23 +61,17 @@ app.post("/apiImage/process-and-predict", async (req, res) => {
 
 // Fonction pour traiter l'image
 function processImage(imagePath) {
-    // Charger l'image avec OpenCV
-    const image = cv2.imread(imagePath);
+    // Charger l'image avec Sharp
+    const image = sharp(imagePath);
 
-    // Convertir l'image en niveaux de gris
-    const grayImage = image.cvtColor(cv2.COLOR_BGR2GRAY);
-
-    // Redimensionner l'image à la taille 28x28
-    const resizedImage = grayImage.resize(28, 28);
-
-    // Aplatir l'image en un vecteur unidimensionnel de 784 valeurs de pixel
-    const flattenedImage = resizedImage.reshape(1, -1);
-
-    // Normalisation des données
-    const normalizedImage = flattenedImage.div(255.0);
+    // Convertir l'image en niveaux de gris et la redimensionner
+    const resizedImage = image
+        .greyscale()
+        .normalise()
+        .toBuffer();
 
     // Retourner les données de l'image traitée
-    return normalizedImage.getDataAsArray();
+    return resizedImage;
 }
 
 // Fonction pour prédire l'image
