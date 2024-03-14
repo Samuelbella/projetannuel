@@ -36,16 +36,21 @@ const App = () => {
     const handleMouseUp = () => {
       setIsDrawing(false);
       setDigit(canvas.toDataURL()); // Convertir le dessin en une URL de données
+      sendImageToServer();
     };
 
     const handleMouseLeave = () => {
       setIsDrawing(false);
     };
 
+    // Configure le contexte du canvas pour le dessin en blanc 
+    context.strokeStyle = 'white'; // Couleur du trait en blanc
+
     canvas.addEventListener('mousedown', handleMouseDown);
     canvas.addEventListener('mousemove', draw);
     canvas.addEventListener('mouseup', handleMouseUp);
     canvas.addEventListener('mouseleave', handleMouseLeave);
+
 
     // Nettoyer les événements à la fin
     return () => {
@@ -56,18 +61,20 @@ const App = () => {
     };
   }, [isDrawing, isCleared]);
 
-  // Fonction pour prédire le chiffre dessiné ----- la logique n'est pas faite encore
-  const handlePredict = () => {
-    // Envoyer l'image dessinée au serveur pour prédiction
-    axios.post('/predict', { digit })
+  // Fonction pour envoyer l'image dessinée au serveur
+  const sendImageToServer = () => {
+    const canvas = canvasRef.current;
+    const imageData = canvas.toDataURL(); // Récupérer l'image du canvas au format base64
+
+    // Envoyer l'image au serveur
+    axios.post("http://localhost:8000/apiImage/process-and-predict", { imageBase64: imageData })
       .then(response => {
-        // Mettre à jour l'état avec la prédiction reçue du serveur
-        setPrediction(response.data.prediction);
+        // Gérer la réponse du serveur (prédiction du chiffre, etc.)
+        console.log("Réponse du serveur :", response.data);
       })
       .catch(error => {
-        // Afficher une erreur en cas de problème lors de la prédiction
-        console.error('Erreur de prédiction :', error);
-        alert('Une erreur s\'est produite lors de la prédiction. Veuillez réessayer.');
+        console.error("Erreur lors de l'envoi de l'image au serveur :", error);
+        // Gérer les erreurs
       });
   };
 
@@ -90,12 +97,12 @@ const App = () => {
           ref={canvasRef}
           width="280"
           height="280"
-          style={{ border: '1px solid black' }}
+          style={{ border: '1px solid black', backgroundColor: 'black' }}
         />
       </div>
       {/* Boutons pour prédire le chiffre et effacer le contenu */}
       <div>
-        <button onClick={handlePredict}>Prédire le Chiffre</button>
+        <button onClick={sendImageToServer}>Prédire le Chiffre</button>
         <button onClick={handleClear}>Effacer</button>
       </div>
       {/* Afficher la prédiction */}
