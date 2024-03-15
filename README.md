@@ -1,6 +1,6 @@
 # Projet annuel
-Ce projet a été fait dans le cadre de la validation de notre première année de Mastère à l'IPSSI.  
-Il a pour but de développer une application web permettant aux utilisateurs de dessiner des chiffres qui seront comparés à plusieurs modèles avec le Machine Learning pour permettre de reconnaître le chiffre dessiné.
+Ce projet a pour but de développer une application web permettant aux utilisateurs de dessiner des chiffres qui seront comparés à plusieurs modèles avec le Machine Learning pour permettre de reconnaître le chiffre dessiné.  
+Ce modèle pourra servir par exemple pour le secteur de la poste, le secteur bancaire ou pour résoudre des sudoku.
 
 ## Lancer les scripts
 <ol>
