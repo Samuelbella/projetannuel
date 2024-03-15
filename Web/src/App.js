@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import axios from 'axios';
+import './App.css'
 
 const App = () => {
   const canvasRef = useRef(null); // Référence au canva
@@ -24,6 +25,7 @@ const App = () => {
       // Dessiner sur le canvas
       context.lineTo(offsetX, offsetY);
       context.stroke();
+      context.lineWidth = 8;
     };
 
     // Événements de la souris pour commencer le dessin, dessiner et arrêter le dessin
@@ -82,7 +84,7 @@ const App = () => {
   const handleClear = () => {
     const canvas = canvasRef.current;
     const context = canvas.getContext('2d');
-    context.clearRect(0, 0, canvas.width, canvas.height);
+    canvas.width = canvas.width; // Redéfinir la largeur du canvas pour effacer le contenu
     setDigit(null);
     setPrediction(null);
     setIsCleared(true); // Mettre à jour l'état de l'effacement
@@ -102,7 +104,7 @@ const App = () => {
 
 
   return (
-    <div>
+    <div className="app-container">
       <h1>Application Web de Reconnaissance de Chiffres</h1>
       <div>
         {/* Canvas pour dessiner*/}
@@ -114,9 +116,9 @@ const App = () => {
         />
       </div>
       {/* Boutons pour prédire le chiffre et effacer le contenu */}
-      <div>
-        <button onClick={handlePredict}>Prédire le Chiffre</button>
-        <button onClick={handleClear}>Effacer</button>
+      <div className="button-container">
+        <button className="predict-button" onClick={handlePredict}>Prédire le Chiffre</button>
+        <button className="clear-button" onClick={handleClear}>Effacer</button>
       </div>
       {/* Afficher la prédiction */}
       {prediction && <h2>Prédiction : {prediction}</h2>}

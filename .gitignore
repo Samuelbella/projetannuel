@@ -1,3 +1,6 @@
 server/.env
-server/node_modules
-Web/node_modules
+server/node_modules/*
+server/package-lock.json
+Web/node_modules/*
+Web/package-lock.json
+data/.ipynb_checkpoints
