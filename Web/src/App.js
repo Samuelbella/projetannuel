@@ -77,7 +77,6 @@ const App = () => {
         // Gérer les erreurs
       });
   };
-
   // Fonction pour effacer le contenu du canvas
   const handleClear = () => {
     const canvas = canvasRef.current;
@@ -107,6 +106,9 @@ const App = () => {
       </div>
       {/* Afficher la prédiction */}
       {prediction && <h2>Prédiction : {prediction}</h2>}
+      <footer className="footer">
+        <p>Ce projet a été réalisé par Julia LOGANATHAN - Samuel BELLAICHE - Sonita MORENCY</p>
+      </footer>
     </div>
   );
 };

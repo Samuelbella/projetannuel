@@ -16,12 +16,19 @@ const getDigitId = (req, res) => {
         .catch(err => res.status(404).json({ notFound: 'Digit non trouvé' }))
 };
 
-//ajouter Digit
-const addDigit = (req, res) => {
-    Digits.create(req.body)
-        .then(Digit => res.status(200).json({ result: 'Digit ajouté' }))
-        .catch(err => res.status(404).json({ error: 'Digit non ajouté' }))
+// Ajouter un Digit
+const addDigit = async (pixelsArray) => {
+    try {
+        const digit = new Digits({ pixels: pixelsArray });
+        await digit.save();
+        console.log("Données de pixels enregistrées avec succès dans la collection 'digits'");
+        return { success: true };
+    } catch (error) {
+        console.error("Erreur lors de l'enregistrement des données de pixels :", error);
+        return { success: false, error: "Erreur lors de l'enregistrement des données de pixels" };
+    }
 };
+
 
 // Supprimer un Digits avec id
 const deleteDigit = (req, res) => {

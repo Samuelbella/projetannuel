@@ -2,19 +2,37 @@ import cv2
 import numpy as np
 import joblib
 import warnings
-
+import os
+import glob
 # Ignorer les avertissements concernant les noms de fonctionnalités manquants
 warnings.filterwarnings("ignore", category=UserWarning, module="sklearn")
 
 # Charger le modèle à partir du fichier
 #decision_tree_model = joblib.load(r"C:\wamp\www\projetannuel\decision_tree_model.pkl")
 #random_forest_model = joblib.load(r"C:\wamp\www\projetannuel\random_forest_model.pkl")
-svm_model = joblib.load(r"C:\wamp\www\projetannuel\svm_model.pkl")
+svm_model = joblib.load(r"C:\wamp\www\projetannuel\data\svm_model.pkl")
 
+#################
 # Charger l'image
-image_path = r"C:\wamp\www\projetannuel\test\de.jpg"
-image = cv2.imread(image_path)
+# Chemin du répertoire d'upload
+upload_dir = r"C:\wamp\www\projetannuel\server\uploads"
 
+# Obtenir la liste de tous les fichiers dans le répertoire d'upload
+files = glob.glob(os.path.join(upload_dir, "*"))
+
+# Trier les fichiers par date de modification (le plus récent en premier)
+files.sort(key=os.path.getmtime, reverse=True)
+
+# Prendre le chemin du fichier le plus récent
+latest_image_path = files[0]
+
+# Charger l'image la plus récente
+image = cv2.imread(latest_image_path)
+################
+'''
+chemin = r"C:\wamp\www\projetannuel\server\uploads\1710465610901.jpg"
+image = cv2.imread(chemin)
+'''
 # Convertir l'image en niveaux de gris
 gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 
