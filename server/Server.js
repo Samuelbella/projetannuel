@@ -115,34 +115,32 @@ function loadSVMModel() {
 }
 */
 
-// Route pour afficher le contenu du script Python
-app.get("/apiImage/show-python-script", (req, res) => {
-    const path = require('path');
-    const pythonScriptPath = path.join('C:', 'wamp', 'www', 'projetannuel', 'data', 'deploiement.py');
-    // Chemin vers votre script Python
+// Route pour afficher le résultat de l'exécution du script Python
+app.get("/apiImage/show-python-result", (req, res) => {
+    const pythonScriptPath = 'C:/wamp/www/projetannuel/data/deploiement.py';
 
-    // Lire le contenu du script Python
-    fs.readFile(pythonScriptPath, 'utf8', (err, data) => {
-        if (err) {
-            console.error("Erreur lors de la lecture du script Python :", err);
-            res.status(500).json({ error: "Erreur lors de la lecture du script Python" });
-            return;
-        }
-
-        // Envoyer le contenu du script Python en réponse
-        console.log("Contenu du script Python :", data);
-        res.status(200).send(data);
-    });
-
+    // Exécuter le script Python
     const pythonProcess = spawn('python', [pythonScriptPath]);
 
+    // Capturer la sortie du processus Python
+    let pythonOutput = '';
     pythonProcess.stdout.on('data', (data) => {
-        console.log(`Sortie Python : ${data}`);
-        res.status(200).json({ output: data.toString() });
+        pythonOutput += data.toString();
     });
 
-});
+    // Gérer les erreurs de l'exécution du script Python
+    pythonProcess.stderr.on('data', (data) => {
+        console.error(`Erreur lors de l'exécution du script Python : ${data}`);
+        res.status(500).json({ error: "Erreur lors de l'exécution du script Python" });
+    });
 
+    // Lorsque le processus Python est terminé, envoyer la réponse avec le résultat
+    pythonProcess.on('close', (code) => {
+        if (code === 0) {
+            res.status(200).json({ output: pythonOutput });
+        }
+    });
+});
 
 // Lancer le serveur
 app.listen(8000, () => {

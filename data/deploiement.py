@@ -29,10 +29,7 @@ latest_image_path = files[0]
 # Charger l'image la plus récente
 image = cv2.imread(latest_image_path)
 ################
-'''
-chemin = r"C:\wamp\www\projetannuel\server\uploads\1710465610901.jpg"
-image = cv2.imread(chemin)
-'''
+
 # Convertir l'image en niveaux de gris
 gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 
@@ -55,5 +52,5 @@ prediction_svm = svm_model.predict(image_nor_reshaped)
 
 #print("Prediction Decision Tree:", prediction_dt)
 #print("Prediction Random Forest:", prediction_rf)
-print("Prediction SVM:", prediction_svm)
+print(prediction_svm)
 

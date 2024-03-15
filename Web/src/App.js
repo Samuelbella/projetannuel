@@ -77,6 +77,7 @@ const App = () => {
         // Gérer les erreurs
       });
   };
+
   // Fonction pour effacer le contenu du canvas
   const handleClear = () => {
     const canvas = canvasRef.current;
@@ -86,6 +87,19 @@ const App = () => {
     setPrediction(null);
     setIsCleared(true); // Mettre à jour l'état de l'effacement
   };
+
+  // Fonction pour prédire le chiffre
+  const handlePredict = async () => {
+    try {
+      const response = await axios.get("http://localhost:8000/apiImage/show-python-result"); // Appeler la route du backend pour récupérer la prédiction
+      const prediction = response.data.output; // Récupérer la prédiction depuis la réponse
+      setPrediction(prediction); // Mettre à jour l'état de la prédiction avec la valeur renvoyée par le serveur
+    } catch (error) {
+      console.error("Erreur lors de la récupération de la prédiction :", error);
+      // Gérer les erreurs si nécessaire
+    }
+  };
+
 
   return (
     <div>
@@ -101,12 +115,13 @@ const App = () => {
       </div>
       {/* Boutons pour prédire le chiffre et effacer le contenu */}
       <div>
-        <button onClick={sendImageToServer}>Prédire le Chiffre</button>
+        <button onClick={handlePredict}>Prédire le Chiffre</button>
         <button onClick={handleClear}>Effacer</button>
       </div>
       {/* Afficher la prédiction */}
       {prediction && <h2>Prédiction : {prediction}</h2>}
       <footer className="footer">
+
         <p>Ce projet a été réalisé par Julia LOGANATHAN - Samuel BELLAICHE - Sonita MORENCY</p>
       </footer>
     </div>
