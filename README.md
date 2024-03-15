@@ -3,16 +3,23 @@ Ce projet a été fait dans le cadre de la validation de notre première année 
 Il a pour but de développer une application web permettant aux utilisateurs de dessiner des chiffres qui seront comparés à plusieurs modèles avec le Machine Learning pour permettre de reconnaître le chiffre dessiné.
 
 ## Lancer les scripts
-
-1. Récupérer le code source
-### `git clone https://github.com/Samuelbella/projetannuel.git`
-2. Ouvrir un terminal
-3. Lancer le serveur<
-###    a. `npm install`
-###    b. `node Server.js`
-4. Lancer l’application web
-###    a. `npm install`
-###    b. `npm start`
+<ol>
+    <li>Récupérer le code source</li>
+    <ol type="a">
+        <li>Commande : git clone https://github.com/Samuelbella/projetannuel.git</li>
+    </ol>
+    <li>Ouvrir un terminal</li>
+    <li>Lancer le serveur</li>
+    <ol type="a">
+        <li>Commande : npm install</li>
+        <li>Commande : node Server.js</li>
+    </ol>
+    <li>Lancer l’application web</li>
+    <ol type="a">
+        <li>Commande : npm install</li>
+        <li>Commande : npm start</li>
+    </ol>
+</ol>  
 
 ## Repartition des tâches
 
