@@ -1,5 +1,8 @@
 # Projet annuel
-Ce projet a pour but de développer une application web permettant aux utilisateurs de dessiner des chiffres qui seront comparés à plusieurs modèles avec le Machine Learning pour permettre de reconnaître le chiffre dessiné.  
+Ce projet a pour but de développer une application web permettant aux utilisateurs de dessiner des chiffres qui seront comparés à un modèles avec le Machine Learning pour permettre de reconnaître le chiffre dessiné.  
+Nous avons entraîner 3 modèle : Arbre de déccision, Random Forest et SVM ( Support Vector Machine .
+Nous les avons entrainer sur les données d'entrainement de MNIST brute, puis sur les données normées. Nous avons également entrainer les modèles avec les meilleurs paramètre trouver avec GridSearchCV. Finalement, nous avons retenues le modèle SVM avec un accuracy de 0,98.
+On a utilisé la stack MERN pour créer l'application, les modèles ont été entrainé avec Python.
 Ce modèle pourra servir par exemple pour le secteur de la poste, le secteur bancaire ou pour résoudre des sudoku.
 
 ## Lancer l'application
