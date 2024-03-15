@@ -1,0 +1,48 @@
+{
+    "version": 2,
+    "builds": [
+        {
+            "src": "/server/Server.js",
+            "use": "@vercel/node"
+        },
+        {
+            "src": "/web/package.json",
+            "use": "@vercel/node"
+        }
+    ],
+    "routes": [
+        {
+            "src": "/server/(.*)",
+            "dest": "/server/Server.js"
+        },
+        {
+            "src": "/web/(.*)",
+            "dest": "/web/$1"
+        },
+        {
+            "src": "/(.*)",
+            "dest": "/web/$1"
+        },
+        {
+            "handle": "filesystem"
+        },
+        {
+            "src": "/.*",
+            "dest": "/web/index.html"
+        }
+    ],
+    "env": {
+        "NODE_ENV": "production"
+    },
+    "dev": {
+        "ignore": [
+            "**/node_modules/**"
+        ]
+    },
+    "build": {
+        "env": {
+            "NODE_ENV": "production"
+        }
+    },
+    "start": "node server/Server.js"
+}
